@@ -54,12 +54,8 @@ const App = () => {
       <div className='mt-2'>
         <Row xs={1} md={2} className="g-3">
         {currentItems.map(wallpaperImage => (
-          <Card style={{ width: '12rem' }}>
-              <Card.Body>
-                <Card.Img src={wallpaperImage[0]} />
-                <Card.Title>Card Title</Card.Title>
-                <Button variant="primary">Go somewhere</Button>
-              </Card.Body>
+          <Card onClick={onclick} style={{ width: '12rem', cursor: "pointer" }}>
+              <Card.Img src={wallpaperImage[0]} className='img-fluid' />
             </Card>
         ))} 
         </Row>
