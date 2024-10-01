@@ -8,6 +8,8 @@ import './App.css';
 
 const App = () => {
   const [wallpapers, setWallpapers] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
+
   useEffect(() => {
     fetch('/media-1a-i-p~s.json')
     .then((response) => response.json())
@@ -24,24 +26,50 @@ const App = () => {
   })
     .catch((error) => console.error('error fetching data:', error))
   }, []);
+
+  //tracks how many cards to show per page
+  const itemsPerPage = 10;
+  //calculates the total number of pages
+  const totalPages = Math.ceil(wallpapers.length / itemsPerPage);
+
+  //handles displaying the current items for the page
+  const currentItems = wallpapers.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
+
+  const handlePrevPage = () => {
+    if (currentPage > 0)
+    {
+      setCurrentPage(currentPage - 1)
+    }
+  }
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages - 1)
+    {
+      setCurrentPage(currentPage + 1)
+    }
+  }
+
   return (
     <div className="App">
       <div className='mt-2'>
-        <Row xs={1} md={2} className="g-4">
-        {wallpapers.map(wallpaperImage => (
-          <Card style={{ width: '18rem' }}>
+        <Row xs={1} md={2} className="g-3">
+        {currentItems.map(wallpaperImage => (
+          <Card style={{ width: '12rem' }}>
               <Card.Body>
                 <Card.Img src={wallpaperImage[0]} />
                 <Card.Title>Card Title</Card.Title>
-                <Card.Text>
-                  Some quick example text to build on the card title and make up the
-                  bulk of the card's content.
-                </Card.Text>
                 <Button variant="primary">Go somewhere</Button>
               </Card.Body>
             </Card>
         ))} 
         </Row>
+        {/* Pagination controls */}
+        <button onClick={handlePrevPage} disabled={currentPage === 0}>
+          Previous Page
+        </button>
+        <button onClick={handleNextPage} disabled={currentPage === totalPages - 1}>
+          Next Page
+        </button>
       </div>
     </div>
   );
