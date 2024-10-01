@@ -1,8 +1,7 @@
 import React from 'react';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container'
 import Card from 'react-bootstrap/Card';
+import Image from 'react-bootstrap/Image';
 import {useState, useEffect} from 'react';
 import './App.css';
 
@@ -51,14 +50,14 @@ const App = () => {
 
   return (
     <div className="App">
-      <div className='mt-2'>
-        <Row xs={1} md={2} className="g-3">
-        {currentItems.map(wallpaperImage => (
-          <Card onClick={onclick} style={{ width: '12rem', cursor: "pointer" }}>
-              <Card.Img src={wallpaperImage[0]} className='img-fluid' />
-            </Card>
-        ))} 
-        </Row>
+      <div>
+          <Container className="flex-container">
+          {currentItems.map((wallpaperImage, index) => (
+            <div className="flex-item" key={index} >
+              <Image src={wallpaperImage[0]} onClick={onclick} style={{cursor: "pointer" }} className="flex-image" />
+            </div>
+          ))} 
+          </Container>
         {/* Pagination controls */}
         <button onClick={handlePrevPage} disabled={currentPage === 0}>
           Previous Page
